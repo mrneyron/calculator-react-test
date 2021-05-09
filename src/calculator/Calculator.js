@@ -127,7 +127,7 @@ function Calculator() {
         case '*': setCalcText(firstNum * secondNum); break;
         case '/': setCalcText(firstNum / secondNum); break;
         case '%': setCalcText((firstNum * secondNum) / 100); break;
-        case 'x^y': setCalcText(Math.pow(firstNum, secondNum)); break;
+        case 'x^y': setCalcText(firstNum ** secondNum); break;
         default: break;
       }
     } else {
@@ -186,7 +186,7 @@ function Calculator() {
             ? getTextMathConst(secondNum)
             : calcText}`);
         }
-      } 
+      }
     } else {
       let textHelp = '';
       const num = secondNum !== null
