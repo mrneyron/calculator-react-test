@@ -21,6 +21,7 @@ const ButtonComponent = (props) => {
         <ThemeProvider theme={theme}>
           <Button
             fullWidth
+            className={classes.button}
             onClick={handleClick}
             variant="contained"
             color={color}

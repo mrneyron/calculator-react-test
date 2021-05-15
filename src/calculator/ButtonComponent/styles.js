@@ -13,12 +13,28 @@ export const theme = createMuiTheme({
       main: '#e3f2fd',
     },
   },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 450,
+      md: 960,
+      lg: 1280,
+      xl: 1920,
+    },
+  },
 });
 
-export const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles(() => ({
   root: {
     '& > *': {
       margin: theme.spacing(1),
     },
   },
+  button: {
+    [theme.breakpoints.down('xs')]: {
+      padding: '6px 4px',
+      minWidth: 40,
+      width: 44,
+    },
+  }
 }));

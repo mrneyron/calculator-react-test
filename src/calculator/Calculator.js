@@ -15,7 +15,7 @@ function Calculator() {
   const [firstNum, setFirstNum] = useState(null);
   const [secondNum, setSecondNum] = useState(null);
   const [operation, setOperation] = useState(null);
-  const [openScientific, setOpenScientific] = useState(true);
+  const [openScientific, setOpenScientific] = useState(false);
   const [isTwoOperand, setIsTwoOperand] = useState(true);
   const [helperText, setHelperText] = useState(' ');
 
@@ -230,7 +230,7 @@ function Calculator() {
                   variant="outlined"
                 />
               </Grid>
-              <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
+              <Grid item xs={8} sm={6} md={4} lg={3} xl={2}>
                 <Grid container className={classes.container} spacing={1}>
                   {deafultSymbols.map((sym) => (
                     <ButtonComponent
@@ -249,7 +249,7 @@ function Calculator() {
                   />
                 </Grid>
               </Grid>
-              <Grid item xs={6} sm={3} md={2} lg={2} xl={2}>
+              <Grid item xs={4} sm={3} md={2} lg={2} xl={2}>
                 <Grid container className={classes.container} spacing={1}>
                   {openScientific ? (
                     <>
