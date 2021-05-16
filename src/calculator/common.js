@@ -1,4 +1,4 @@
-export const getFactorial = (n) => ((n !== 1) ? n * getFactorial(n - 1) : 1);
+export const getFactorial = (n) => !(n > 1) ? 1 : n * getFactorial(n - 1);
 
 export const getTextMathConst = (value) => {
   let text = value;

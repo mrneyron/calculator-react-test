@@ -19,15 +19,21 @@ function Calculator() {
   const [isTwoOperand, setIsTwoOperand] = useState(true);
   const [helperText, setHelperText] = useState(' ');
 
+  const getNumFromMathConst = (text) => {
+    if (text === 'e') {
+      return Math.E;
+    }
+    if (text === 'π') {
+      return Math.PI;
+    } else {
+      return parseFloat(text, 10);
+    }
+  };
+
   const handleSetOperation = (sym) => {
+    setFirstNum(null);
     if (calcText !== '') {
-      if (calcText === 'e') {
-        setFirstNum(Math.E);
-      } else if (calcText === 'π') {
-        setFirstNum(Math.PI);
-      } else {
-        setFirstNum(parseFloat(calcText, 10));
-      }
+      setFirstNum(getNumFromMathConst(calcText));
     }
     setOperation(sym);
     setCalcText('');
@@ -45,6 +51,7 @@ function Calculator() {
     setFirstNum(null);
     setSecondNum(null);
     setOperation(null);
+    setHelperText(' ');
   };
 
   const handleToggleSign = () => {
@@ -57,7 +64,7 @@ function Calculator() {
     }
   };
 
-  const hadleClearLast = () => {
+  const handleClearLast = () => {
     setCalcText(calcText.toString().substring(0, calcText.length - 1) || '');
   };
 
@@ -65,13 +72,7 @@ function Calculator() {
     setCalcText('');
     if ((operation !== null) && (calcText !== '')) {
       if (isTwoOperand) {
-        if (calcText === 'e') {
-          setSecondNum(Math.E);
-        } else if (calcText === 'π') {
-          setSecondNum(Math.PI);
-        } else {
-          setSecondNum(parseFloat(calcText, 10));
-        }
+        setSecondNum(getNumFromMathConst(calcText));
       } else {
         setSecondNum(getNumFromLongText(calcText, operation));
       }
@@ -106,7 +107,7 @@ function Calculator() {
     } else if (key === '^') {
       handleSetOperation('x^y');
     } else if (key === 'Backspace') {
-      hadleClearLast();
+      handleClearLast();
     } else if ((key === 'Enter') || (key === '=')) {
       handleResult();
     }
@@ -118,30 +119,6 @@ function Calculator() {
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, [calcText]);
-
-  useEffect(() => {
-    if (isTwoOperand) {
-      switch (operation) {
-        case '+': setCalcText(firstNum + secondNum); break;
-        case '-': setCalcText(firstNum - secondNum); break;
-        case '*': setCalcText(firstNum * secondNum); break;
-        case '/': setCalcText(firstNum / secondNum); break;
-        case '%': setCalcText((firstNum * secondNum) / 100); break;
-        case 'x^y': setCalcText(firstNum ** secondNum); break;
-        default: break;
-      }
-    } else {
-      switch (operation) {
-        case 'ln': setCalcText(Math.log(secondNum)); break;
-        case 'log': setCalcText(Math.log10(secondNum)); break;
-        case 'sin': setCalcText(Math.sin(secondNum)); break;
-        case 'cos': setCalcText(Math.cos(secondNum)); break;
-        case 'tan': setCalcText(Math.tan(secondNum)); break;
-        case '√': setCalcText(Math.sqrt(secondNum)); break;
-        default: break;
-      }
-    }
-  }, [secondNum]);
 
   const handleClickMathConst = (text) => {
     if (isTwoOperand) {
@@ -160,9 +137,7 @@ function Calculator() {
   const handleClickFactorial = (text) => {
     setIsTwoOperand(false);
     if (calcText !== '') {
-      setSecondNum(parseFloat(calcText, 10));
-      setOperation(text);
-      setCalcText(getFactorial(parseFloat(calcText, 10)));
+      setHelperText(`${calcText}! = ${getFactorial(getNumFromMathConst(calcText))}`);
     }
   };
 
@@ -187,27 +162,37 @@ function Calculator() {
             : calcText}`);
         }
       }
-    } else {
-      let textHelp = '';
-      const num = secondNum !== null
-        ? secondNum
-        : getNumFromLongText(calcText, operation);
-      switch (operation) {
-        case 'x!': textHelp = `${getTextMathConst(secondNum)}!`; break;
-        case 'cos': textHelp = `cos(${getTextMathConst(num)})`; break;
-        case 'sin': textHelp = `sin(${getTextMathConst(num)})`; break;
-        case 'tan': textHelp = `tan(${getTextMathConst(num)})`; break;
-        case 'log': textHelp = `log(${getTextMathConst(num)})`; break;
-        case 'ln': textHelp = `ln(${getTextMathConst(num)})`; break;
-        case '√': textHelp = `√(${getTextMathConst(num)})`; break;
-        default: textHelp = ''; break;
-      }
-      setHelperText(textHelp);
-    }
+    } 
     return () => {
       setHelperText(' ');
     };
   }, [firstNum, operation, secondNum]);
+
+  useEffect(() => {
+    if (isTwoOperand) {
+      if ((firstNum !== null) && (secondNum !== null)) {
+        switch (operation) {
+          case '+': setHelperText(`${firstNum} + ${getTextMathConst(secondNum)} = ${firstNum + secondNum}`); break;
+          case '-': setHelperText(`${firstNum} - ${getTextMathConst(secondNum)} = ${firstNum - secondNum}`); break;
+          case '*': setHelperText(`${firstNum} * ${getTextMathConst(secondNum)} = ${firstNum * secondNum}`); break;
+          case '/': setHelperText(`${firstNum} / ${getTextMathConst(secondNum)} = ${firstNum / secondNum}`); break;
+          case '%': setHelperText(`${firstNum} % ${getTextMathConst(secondNum)} = ${(firstNum * secondNum) / 100}`); break;
+          case 'x^y': setHelperText(`${firstNum}^${getTextMathConst(secondNum)} = ${firstNum ** secondNum}`); break;
+          default: break;
+        }
+      }
+    } else {
+      switch (operation) {
+        case 'ln': setHelperText(`${operation}(${getTextMathConst(secondNum)}) = ${Math.log(secondNum)}`); break;
+        case 'log': setHelperText(`${operation}(${getTextMathConst(secondNum)}) = ${Math.log10(secondNum)}`); break;
+        case 'sin': setHelperText(`${operation}(${getTextMathConst(secondNum)}) = ${Math.sin(secondNum)}`); break;
+        case 'cos': setHelperText(`${operation}(${getTextMathConst(secondNum)}) = ${Math.cos(secondNum)}`); break;
+        case 'tan': setHelperText(`${operation}(${getTextMathConst(secondNum)}) = ${Math.tan(secondNum)}`); break;
+        case '√': setHelperText(`${operation}(${getTextMathConst(secondNum)}) = ${Math.sqrt(secondNum)}`); break;
+        default: break;
+      }
+    }
+  }, [secondNum]);
 
   return (
     <div className={classes.root}>
