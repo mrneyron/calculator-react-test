@@ -17,4 +17,10 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     marginBottom: theme.spacing(1),
   },
+  buttons: {
+    [theme.breakpoints.down('xs')]: {
+      margin: -10,
+      marginLeft: 0,
+    }
+  }
 }));

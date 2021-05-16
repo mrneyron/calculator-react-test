@@ -28,6 +28,9 @@ export const useStyles = makeStyles(() => ({
   root: {
     '& > *': {
       margin: theme.spacing(1),
+      [theme.breakpoints.down('sm')]: {
+        margin: 0,
+      }
     },
   },
   button: {

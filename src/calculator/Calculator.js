@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import clsx from 'clsx';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
 import ButtonComponent from './ButtonComponent';
@@ -199,13 +199,6 @@ function Calculator() {
       <Grid container className={classes.container} spacing={1}>
         <Grid item xs={12}>
           <Paper className={classes.paper}>
-            <Typography component="p" variant="h6">Calculator</Typography>
-          </Paper>
-        </Grid>
-      </Grid>
-      <Grid container className={classes.container} spacing={1}>
-        <Grid item xs={12}>
-          <Paper className={classes.paper}>
             <Grid className={classes.container} container spacing={1}>
               <Grid item xs={12}>
                 <TextField
@@ -216,7 +209,7 @@ function Calculator() {
                 />
               </Grid>
               <Grid item xs={8} sm={6} md={4} lg={3} xl={2}>
-                <Grid container className={classes.container} spacing={1}>
+                <Grid container className={clsx(classes.container, classes.buttons)} spacing={1}>
                   {deafultSymbols.map((sym) => (
                     <ButtonComponent
                       text={sym.text}
@@ -235,7 +228,7 @@ function Calculator() {
                 </Grid>
               </Grid>
               <Grid item xs={4} sm={3} md={2} lg={2} xl={2}>
-                <Grid container className={classes.container} spacing={1}>
+                <Grid container className={clsx(classes.container, classes.buttons)} spacing={1}>
                   {openScientific ? (
                     <>
                       <ButtonComponent
