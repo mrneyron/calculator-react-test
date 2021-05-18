@@ -227,47 +227,45 @@ function Calculator() {
                   />
                 </Grid>
               </Grid>
+              {openScientific ? (
               <Grid item xs={4} sm={3} md={2} lg={2} xl={2}>
                 <Grid container className={clsx(classes.container, classes.buttons)} spacing={1}>
-                  {openScientific ? (
-                    <>
-                      <ButtonComponent
-                        text="x^y"
-                        xs={6}
-                        color="secondary"
-                        handleClick={() => handleClickButton('x^y')}
-                      />
-                      {['√', 'ln', 'log', 'sin', 'cos', 'tan'].map((item) => (
-                        <ButtonComponent
-                          text={item}
-                          xs={6}
-                          color="secondary"
-                          key={item}
-                          handleClick={() => handleClickMoreFunc(item)}
-                        />
-                      ))}
-                      <ButtonComponent
-                        text="x!"
-                        xs={6}
-                        color="secondary"
-                        handleClick={() => handleClickFactorial('x!')}
-                      />
-                      <ButtonComponent
-                        text="e"
-                        xs={6}
-                        color="secondary"
-                        handleClick={() => handleClickMathConst('e')}
-                      />
-                      <ButtonComponent
-                        text="π"
-                        xs={6}
-                        color="secondary"
-                        handleClick={() => handleClickMathConst('π')}
-                      />
-                    </>
-                  ) : null}
+                  <ButtonComponent
+                    text="x^y"
+                    xs={6}
+                    color="secondary"
+                    handleClick={() => handleClickButton('x^y')}
+                  />
+                  {['√', 'ln', 'log', 'sin', 'cos', 'tan'].map((item) => (
+                    <ButtonComponent
+                      text={item}
+                      xs={6}
+                      color="secondary"
+                      key={item}
+                      handleClick={() => handleClickMoreFunc(item)}
+                    />
+                  ))}
+                  <ButtonComponent
+                    text="x!"
+                    xs={6}
+                    color="secondary"
+                    handleClick={() => handleClickFactorial('x!')}
+                  />
+                  <ButtonComponent
+                    text="e"
+                    xs={6}
+                    color="secondary"
+                    handleClick={() => handleClickMathConst('e')}
+                  />
+                  <ButtonComponent
+                    text="π"
+                    xs={6}
+                    color="secondary"
+                    handleClick={() => handleClickMathConst('π')}
+                  />
                 </Grid>
               </Grid>
+              ) : null}
             </Grid>
           </Paper>
         </Grid>
